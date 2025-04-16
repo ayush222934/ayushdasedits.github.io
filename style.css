@@ -1,0 +1,27 @@
+
+body {
+  margin: 0;
+  background: url('assets/backgrounds/night-sky.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+header {
+  text-align: center;
+  padding: 2em;
+}
+.title {
+  font-size: 2.5em;
+}
+.title span {
+  font-family: 'Cursive';
+  font-size: 1em;
+  color: purple;
+}
+section {
+  padding: 2em;
+}
+.icons img {
+  width: 40px;
+  margin: 10px;
+}
