@@ -1,1 +1,41 @@
-body { background: #0a0a23; color: white; }
+
+body {
+    background: linear-gradient(to bottom right, #000000, #2d0036);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    text-align: center;
+    padding: 2rem;
+}
+header .purple {
+    color: purple;
+    font-size: 3rem;
+}
+header .curved {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+    margin-left: 10px;
+}
+.video-grid, .photo-grid, .tools-logos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 2rem;
+}
+video, img {
+    width: 100%;
+    border-radius: 10px;
+}
+footer .socials {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 1rem;
+}
+footer .socials img {
+    width: 40px;
+    height: 40px;
+}

@@ -1,1 +1,3 @@
-console.log('Welcome to Ayush Edits');
+
+// Add scroll or hover animations here later
+console.log("Site loaded");
