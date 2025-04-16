@@ -1,0 +1,348 @@
+import zipfile
+import os
+
+# Define new project directory with complete structure and dummy content
+project_path = "/mnt/data/ayushedits_final_revised"
+os.makedirs(project_path, exist_ok=True)
+
+# Create sample index.html content
+index_html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ayush Edits</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="fade-in">
+    <h1><span class="purple">Ayush</span><span class="curved">Edits</span></h1>
+    <p class="intro">Video Editor | VFX Artist | Designer</p>
+  </header>
+  
+  <!-- Showcase Video Section -->
+  <section id="showcase" class="fade-in">
+    <h2>Showcase Video</h2>
+    <div class="video-wrapper">
+      <video controls poster="assets/thumbnails/showcase.jpg">
+        <source src="assets/videos/showcase.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+  
+  <!-- Client Work Section -->
+  <section id="client-work" class="fade-in">
+    <h2>Client Work</h2>
+    <div class="video-grid">
+      <div class="thumbnail-wrapper">
+        <img src="assets/thumbnails/client1.jpg" alt="Client Work 1">
+        <div class="popup-overlay">Click to play</div>
+        <video controls src="assets/videos/client1.mp4"></video>
+      </div>
+      <div class="thumbnail-wrapper">
+        <img src="assets/thumbnails/client2.jpg" alt="Client Work 2">
+        <div class="popup-overlay">Click to play</div>
+        <video controls src="assets/videos/client2.mp4"></video>
+      </div>
+      <div class="thumbnail-wrapper">
+        <img src="assets/thumbnails/client3.jpg" alt="Client Work 3">
+        <div class="popup-overlay">Click to play</div>
+        <video controls src="assets/videos/client3.mp4"></video>
+      </div>
+      <div class="thumbnail-wrapper">
+        <img src="assets/thumbnails/client4.jpg" alt="Client Work 4">
+        <div class="popup-overlay">Click to play</div>
+        <video controls src="assets/videos/client4.mp4"></video>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Photo Manipulation Section -->
+  <section id="photo-manip" class="fade-in">
+    <h2>Photo Manipulation Showcase</h2>
+    <div class="photo-grid">
+      <img src="assets/images/manip1.jpg" alt="Manipulation 1">
+      <img src="assets/images/manip2.jpg" alt="Manipulation 2">
+      <img src="assets/images/manip3.jpg" alt="Manipulation 3">
+      <img src="assets/images/manip4.jpg" alt="Manipulation 4">
+    </div>
+  </section>
+  
+  <!-- Tools Section -->
+  <section id="tools" class="fade-in">
+    <h2>Tools I Use</h2>
+    <div class="tools-grid">
+      <div class="tool">
+        <img src="assets/tools/aftereffects.png" alt="After Effects">
+        <p>After Effects</p>
+      </div>
+      <div class="tool">
+        <img src="assets/tools/photoshop.png" alt="Photoshop">
+        <p>Photoshop</p>
+      </div>
+      <div class="tool">
+        <img src="assets/tools/blender.png" alt="Blender">
+        <p>Blender</p>
+      </div>
+      <div class="tool">
+        <img src="assets/tools/maya.png" alt="Maya">
+        <p>Maya</p>
+      </div>
+      <div class="tool">
+        <img src="assets/tools/premiere.png" alt="Premiere Pro">
+        <p>Premiere Pro</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer / Social Icons Section -->
+  <footer class="fade-in">
+    <div class="socials">
+      <a href="#"><img src="assets/icons/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="assets/icons/twitter.png" alt="Twitter"></a>
+      <a href="#"><img src="assets/icons/gmail.png" alt="Gmail"></a>
+      <a href="#"><img src="assets/icons/discord.png" alt="Discord"></a>
+      <a href="#"><img src="assets/icons/tiktok.png" alt="TikTok"></a>
+    </div>
+  </footer>
+  
+  <script src="js/script.js"></script>
+</body>
+</html>
+"""
+
+# Sample CSS content
+style_css = """
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body and Background */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  background: radial-gradient(circle at top, #0f1e35, #060b16);
+  scroll-behavior: smooth;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 50px 20px;
+}
+header h1 {
+  font-size: 4rem;
+}
+.purple {
+  color: purple;
+}
+.curved {
+  font-family: 'Cursive', sans-serif;
+  font-size: 3rem;
+  margin-left: 10px;
+}
+.intro {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}
+
+/* Sections */
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* Showcase */
+.video-wrapper video {
+  width: 80%;
+  max-width: 800px;
+  border-radius: 10px;
+  display: block;
+  margin: 20px auto;
+}
+
+/* Client Work */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.thumbnail-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+.thumbnail-wrapper img {
+  width: 100%;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+}
+.thumbnail-wrapper:hover img {
+  opacity: 0.7;
+}
+.thumbnail-wrapper video {
+  width: 100%;
+  border-radius: 10px;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.thumbnail-wrapper:hover video {
+  display: block;
+}
+.popup-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.7);
+  padding: 5px 10px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.thumbnail-wrapper:hover .popup-overlay {
+  opacity: 1;
+}
+
+/* Photo Manipulation */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.photo-grid img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Tools Section */
+.tools-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+.tool {
+  text-align: center;
+}
+.tool img {
+  width: 60px;
+  transition: transform 0.3s ease;
+}
+.tool img:hover {
+  transform: scale(1.1);
+}
+.tool p {
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+/* Social Icons */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px 20px;
+}
+.socials a img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  padding: 10px;
+  transition: background 0.3s ease;
+}
+.socials a img:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Fade-in Animation */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+  animation-delay: 0.5s;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+"""
+
+# Sample JS content
+script_js = """
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Portfolio website loaded.");
+});
+"""
+
+# Create subdirectories for CSS, JS, and assets
+os.makedirs(os.path.join(project_path, "css"), exist_ok=True)
+os.makedirs(os.path.join(project_path, "js"), exist_ok=True)
+os.makedirs(os.path.join(project_path, "assets/videos"), exist_ok=True)
+os.makedirs(os.path.join(project_path, "assets/thumbnails"), exist_ok=True)
+os.makedirs(os.path.join(project_path, "assets/icons"), exist_ok=True)
+os.makedirs(os.path.join(project_path, "assets/images"), exist_ok=True)
+os.makedirs(os.path.join(project_path, "assets/tools"), exist_ok=True)
+
+# Write files
+with open(os.path.join(project_path, "index.html"), "w") as f:
+    f.write(index_html)
+
+with open(os.path.join(project_path, "css", "style.css"), "w") as f:
+    f.write(style_css)
+
+with open(os.path.join(project_path, "js", "script.js"), "w") as f:
+    f.write(script_js)
+
+# Create dummy asset files (if not replaced by actual assets, you can replace these later)
+dummy_assets = {
+    "assets/videos/showcase.mp4": "dummy video content",
+    "assets/videos/client1.mp4": "dummy video content",
+    "assets/videos/client2.mp4": "dummy video content",
+    "assets/videos/client3.mp4": "dummy video content",
+    "assets/videos/client4.mp4": "dummy video content",
+    "assets/thumbnails/showcase.jpg": "dummy image content",
+    "assets/thumbnails/client1.jpg": "dummy image content",
+    "assets/thumbnails/client2.jpg": "dummy image content",
+    "assets/thumbnails/client3.jpg": "dummy image content",
+    "assets/thumbnails/client4.jpg": "dummy image content",
+    "assets/icons/instagram.png": "dummy icon content",
+    "assets/icons/twitter.png": "dummy icon content",
+    "assets/icons/gmail.png": "dummy icon content",
+    "assets/icons/discord.png": "dummy icon content",
+    "assets/icons/tiktok.png": "dummy icon content",
+    "assets/images/manip1.jpg": "dummy image content",
+    "assets/images/manip2.jpg": "dummy image content",
+    "assets/images/manip3.jpg": "dummy image content",
+    "assets/images/manip4.jpg": "dummy image content",
+    "assets/tools/aftereffects.png": "dummy tool icon",
+    "assets/tools/photoshop.png": "dummy tool icon",
+    "assets/tools/blender.png": "dummy tool icon",
+    "assets/tools/maya.png": "dummy tool icon",
+    "assets/tools/premiere.png": "dummy tool icon",
+}
+
+for filepath, content in dummy_assets.items():
+    full_path = os.path.join(project_path, filepath)
+    with open(full_path, "w") as f:
+        f.write(content)
+
+# Now create the revised zip file
+final_zip_path = "/mnt/data/final_portfolio_revised.zip"
+with zipfile.ZipFile(final_zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+    for root, dirs, files in os.walk(project_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            arcname = os.path.relpath(file_path, project_path)
+            zipf.write(file_path, arcname)
